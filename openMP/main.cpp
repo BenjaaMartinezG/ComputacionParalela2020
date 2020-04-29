@@ -43,6 +43,4 @@ int main()
 
   archivoSalida.close();
   archivoFinal.close();
-  cout << "----TAREA----" << endl;
-  cout << "Benjamin Martinez Garate" << endl;
 }
