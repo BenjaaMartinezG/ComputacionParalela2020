@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <math.h>
 #include <iomanip>
 
 using namespace std;
@@ -53,7 +54,6 @@ int main(int argc, char **argv)
 //funcion que agarra en el vector los puntajes y los promedia
 float promedio(std::vector<std::string> newVector)
 {
-
   float suma = 0.0, prom = 0.0;
 
   for (int i = 0; i <= newVector.size(); i++)
@@ -61,6 +61,8 @@ float promedio(std::vector<std::string> newVector)
     //stoi() convierte de string a numeros
     suma = suma + stoi(newVector[i]);
   }
+  //redondea a entero
+  prom = rint(prom);
   prom = suma / 6;
 
   return prom;
