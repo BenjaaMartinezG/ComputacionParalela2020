@@ -10,7 +10,7 @@
 
 using namespace std;
 
-float getAvegare(std::vector<std::string> califications);
+float getAverage(std::vector<std::string> califications);
 std::vector<std::string> split(std::string line, char delimiter);
 
 int main(int argc, char **argv)
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
       std::string line;
       std::vector<std::string> splitedLine;
       splitedLine = split(line, ';');
-      avegare = getAvegare(splitedLine);
+      avegare = getAverage(splitedLine);
       outFile << splitedLine[0] << ";" << avegare << endl;
     }
     inFile.close();
@@ -62,7 +62,7 @@ std::vector<std::string> split(std::string line, char delimiter = ';')
   return splitedString;
 }
 
-float getAvegare(std::vector<std::string> califications)
+float getAverage(std::vector<std::string> califications)
 {
   float sum = 0.0, prom = 0.0;
   for (int i = 1; i <= califications.size(); i++)
