@@ -5,6 +5,7 @@
     "editor.detectIndentation": false,
     "files.associations": {
       "iterator": "cpp",
-      "iosfwd": "cpp"
+      "iosfwd": "cpp",
+      "ostream": "cpp"
     }
 }

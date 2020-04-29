@@ -7,10 +7,10 @@
 #include <algorithm>
 #include <iterator>
 #include <math.h>
+#include <iomanip>
 
 using namespace std;
 
-float getAverage(std::vector<std::string> califications);
 std::vector<std::string> split(std::string line, char delimiter);
 
 int main(int argc, char **argv)
@@ -23,22 +23,23 @@ int main(int argc, char **argv)
     }
     std::vector<std::string> csvDir;
     csvDir = split(argv[1], '=');
+    cout << "Intentando abrir archivo " << csvDir[1] << endl;
     std::ifstream inFile(csvDir[1]);
-    std::ofstream outFile("avegares.csv");
     if (inFile.fail())
     {
       inFile.close();
-      outFile.close();
       throw "No se ha podido abrir el archivo";
     }
-    std::cout << "Leyendo...";
-    while (!inFile.eof())
+    std::cout << "Leyendo..." << endl;
+    std::ofstream outFile("promedio.csv");
+    std::string line;
+    float avegare;
+    std::vector<std::string> splitedLine;
+    while (std::getline(inFile, line))
     {
-      float avegare;
-      std::string line;
-      std::vector<std::string> splitedLine;
+      std::istringstream iss(line);
       splitedLine = split(line, ';');
-      avegare = getAverage(splitedLine);
+      avegare = (std::stoi(splitedLine[1]) + std::stoi(splitedLine[2]) + std::stoi(splitedLine[3]) + std::stoi(splitedLine[4]) + std::stoi(splitedLine[5]) + std::stoi(splitedLine[6])) / 6;
       outFile << splitedLine[0] << ";" << avegare << endl;
     }
     inFile.close();
@@ -60,16 +61,4 @@ std::vector<std::string> split(std::string line, char delimiter = ';')
     splitedString.push_back(token);
   }
   return splitedString;
-}
-
-float getAverage(std::vector<std::string> califications)
-{
-  float sum = 0.0;
-  for (int i = 1; i <= califications.size(); i++)
-  {
-    int actualCalification;
-    std::istringstream(califications[i]) >> actualCalification;
-    sum += actualCalification;
-  }
-  return rint(sum / califications.size() - 1);
 }

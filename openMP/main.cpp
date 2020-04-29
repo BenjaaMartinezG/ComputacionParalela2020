@@ -33,7 +33,7 @@ int main()
     archivoSalida << matematica << ";";
     archivoSalida << lenguaje << ";";
     archivoSalida << ciencias << ";";
-    archivoSalida << historia << ";" << endl;
+    archivoSalida << historia << endl;
 
     int promedio = (nem + ranking + lenguaje + matematica + ciencias + historia) / 6;
 
