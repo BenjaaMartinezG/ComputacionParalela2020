@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -7,6 +6,7 @@
 #include <sstream>
 #include <algorithm>
 #include <iterator>
+#include <math.h>
 
 using namespace std;
 
@@ -64,12 +64,12 @@ std::vector<std::string> split(std::string line, char delimiter = ';')
 
 float getAverage(std::vector<std::string> califications)
 {
-  float sum = 0.0, prom = 0.0;
+  float sum = 0.0;
   for (int i = 1; i <= califications.size(); i++)
   {
     int actualCalification;
     std::istringstream(califications[i]) >> actualCalification;
     sum += actualCalification;
   }
-  return califications.size() - 1;
+  return rint(sum / califications.size() - 1);
 }
