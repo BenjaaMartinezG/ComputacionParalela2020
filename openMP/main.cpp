@@ -14,8 +14,6 @@ int main()
 {
 
   srand((unsigned int)time(0));
-
-  ofstream archivoFinal("promedio.csv");
   ofstream archivoSalida("puntajes.csv");
 
   for (int rut = 14916641; rut < 19679045; rut++)
@@ -37,10 +35,5 @@ int main()
 
     int promedio = (nem + ranking + lenguaje + matematica + ciencias + historia) / 6;
 
-    archivoFinal << rut << ";"
-                 << "Promedio " << promedio << ";" << endl;
+    archivoSalida.close();
   }
-
-  archivoSalida.close();
-  archivoFinal.close();
-}
