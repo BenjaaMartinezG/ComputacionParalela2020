@@ -15,7 +15,7 @@ El archivo generado en clases, tiene la siguiente estructura:
 * Historia, valor entre 475 y 750.
 
 El archivo que genera el programa **simular-omp** (visto en clases), genera un archivo separado por
-**‘;’** similar al ejemplo dado:
+‘;’ similar al ejemplo dado:
 **Salida de ejemplo**
 ```
 19932382;618;706;723;523;618;599
