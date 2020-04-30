@@ -1,6 +1,7 @@
 # ComputacionParalela2020
 
-### Taller - Semana 01 
+## Taller - Semana 01 
+#### Programacion openMP
 
 Usando el archivo generado durante la actividad del día de hoy. Se solicita un programa en
 C/C++ que leyendo desde la línea de argumentos, _use este argumento como ruta del archivo
