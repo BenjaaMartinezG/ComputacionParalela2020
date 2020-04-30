@@ -15,7 +15,7 @@ El archivo generado en clases, tiene la siguiente estructura:
 * Historia, valor entre 475 y 750.
 
 El archivo que genera el programa **simular-omp** (visto en clases), genera un archivo separado por
-‘;’ similar al ejemplo dado:
+**‘;’** similar al ejemplo dado:
 **Salida de ejemplo**
 ```
 19932382;618;706;723;523;618;599
@@ -37,6 +37,7 @@ archivo anterior, realice un promedio de los puntajes y lo vuelque en un nuevo a
 19932382;631.17
 19932383;597.33
 ```
+---
 * _Se necesita una implementación **Secuencial en C/C++**._
 * _Se necesita una implementación **Secuencial en Dart*._
 * _Se necesita una implementación en **C/C++ que use OpenMP**._
