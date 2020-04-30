@@ -29,11 +29,8 @@ int main()
     archivoSalida << lenguaje << ";";
     archivoSalida << ciencias << ";";
     archivoSalida << historia << endl;
-
-    int promedio = (nem + ranking + lenguaje + matematica + ciencias + historia) / 6;
-
-    archivoSalida.close();
   }
+  archivoSalida.close();
 }
 
 int num_aleatorio(int mayor, int menor)
