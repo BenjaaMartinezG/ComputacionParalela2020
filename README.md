@@ -16,7 +16,7 @@ El archivo generado en clases, tiene la siguiente estructura:
 
 El archivo que genera el programa **simular-omp** (visto en clases), genera un archivo separado por
 ‘;’ similar al ejemplo dado:
-**Salida de ejemplo.
+**Salida de ejemplo**
 ```
 19932382;618;706;723;523;618;599
 19932383;537;741;732;523;543;508
@@ -29,14 +29,14 @@ El archivo que genera el programa **simular-omp** (visto en clases), genera un a
 19932390;629;727;640;715;482;561
 19932391;748;730;486;744;748;596
 ```
-###
+
 Se solicita a cada grupo que desarrolle un programa, que para cada rut de los generados en el
 archivo anterior, realice un promedio de los puntajes y lo vuelque en un nuevo archivo.
-**Ejemplo de salida:
+**Ejemplo de salida:**
 ```
 19932382;631.17
 19932383;597.33
 ```
-* _Se necesita una implementación *Secuencial en C/C++*._
-* _Se necesita una implementación *Secuencial en Dart*._
-* _Se necesita una implementación en *C/C++ que use OpenMP*._
+* _Se necesita una implementación **Secuencial en C/C++**._
+* _Se necesita una implementación **Secuencial en Dart*._
+* _Se necesita una implementación en **C/C++ que use OpenMP**._
