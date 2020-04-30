@@ -3,8 +3,8 @@
 ### Taller - Semana 01 
 
 Usando el archivo generado durante la actividad del día de hoy. Se solicita un programa en
-C/C++ que leyendo desde la línea de argumentos, use este argumento como ruta del archivo
-para procesar.
+C/C++ que leyendo desde la línea de argumentos, _use este argumento como ruta del archivo
+para procesar_.
 El archivo generado en clases, tiene la siguiente estructura:
 * Rut, valor de rut.
 * Nem, valor entre 475 y 750.
