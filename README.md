@@ -39,5 +39,5 @@ archivo anterior, realice un promedio de los puntajes y lo vuelque en un nuevo a
 ```
 
 * _Se necesita una implementación **Secuencial en C/C++**._
-* _Se necesita una implementación **Secuencial en Dart*._
+* _Se necesita una implementación **Secuencial en Dart**._
 * _Se necesita una implementación en **C/C++ que use OpenMP**._
