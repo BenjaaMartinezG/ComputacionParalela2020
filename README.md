@@ -1,6 +1,6 @@
 # ComputacionParalela2020
 
-### Taller N°1 
+### Taller - Semana 01 
 
 Usando el archivo generado durante la actividad del día de hoy. Se solicita un programa en
 C/C++ que leyendo desde la línea de argumentos, use este argumento como ruta del archivo
@@ -37,7 +37,7 @@ archivo anterior, realice un promedio de los puntajes y lo vuelque en un nuevo a
 19932382;631.17
 19932383;597.33
 ```
----
+
 * _Se necesita una implementación **Secuencial en C/C++**._
 * _Se necesita una implementación **Secuencial en Dart*._
 * _Se necesita una implementación en **C/C++ que use OpenMP**._
