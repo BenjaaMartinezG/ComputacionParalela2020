@@ -1,44 +1,70 @@
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
-#include <ctime>
+#include <string>
+#include <vector>
+#include <iomanip>
+#include <sstream>
+#include <algorithm>
+#include <iterator>
+#include <math.h>
+#include <iomanip>
 #include <omp.h>
 
 using namespace std;
 
-int num_aleatorio(int mayor, int menor);
+std::vector<std::string> split(std::string line, char delimiter = ';');
 
 int main(int argc, char **argv)
 {
-  srand((unsigned int)time(0));
-  std::string pyc(";");
 
-  std::ofstream archivoSalida("puntajes.csv");
+  if (!argv[1])
+  {
+    throw "Especifica la ruta";
+  }
+  std::vector<std::string> csvDir;
+  csvDir = split(argv[1], '=');
+  cout << "Intentando abrir archivo " << csvDir[1] << endl;
+  std::ifstream inFile(csvDir[1]);
+  if (inFile.fail())
+  {
+    inFile.close();
+    throw "No se ha podido abrir el archivo";
+  }
+  std::cout << "Leyendo..." << endl;
+  std::ofstream outFile("promedio.csv");
+  std::string line;
+  float avegare;
+  std::vector<std::string> splitedLine;
 
-#pragma omp parallel
+#pragma omp parllel
   {
 
 #pragma omp for
-    for (unsigned long rut = 14916641; rut <= 19932391; rut++)
+    for (int i = 0; i < line.length(); i++)
     {
-      int nem = num_aleatorio(750, 450),
-          ranking = num_aleatorio(750, 450),
-          matematica = num_aleatorio(750, 450),
-          lenguaje = num_aleatorio(750, 450),
-          ciencias = num_aleatorio(750, 450),
-          historia = num_aleatorio(750, 450);
 
-      std::string linea;
-      linea = std::to_string(rut) + pyc + std::to_string(nem) + pyc + std::to_string(ranking) + pyc + std::to_string(matematica) + pyc + std::to_string(lenguaje) + pyc + std::to_string(ciencias) + pyc + std::to_string(historia);
+      getline(inFile, line);
+      std::istringstream iss(line);
+      splitedLine = split(line, ';');
+
+      avegare = (std::stoi(splitedLine[1]) + std::stoi(splitedLine[2]) + std::stoi(splitedLine[3]) + std::stoi(splitedLine[4]) + std::stoi(splitedLine[5]) + std::stoi(splitedLine[6])) / 6;
 
 #pragma omp critical
-      archivoSalida << linea << std::endl;
+      outFile << splitedLine[0] << ";" << avegare << endl;
     }
   }
-  archivoSalida.close();
+  inFile.close();
+  outFile.close();
 }
 
-int num_aleatorio(int mayor, int menor)
+std::vector<std::string> split(std::string line, char delimiter = ';')
 {
-  return (rand() % (mayor - (menor + 1)) + menor);
+  std::vector<std::string> splitedString;
+  std::stringstream ss(line);
+  std::string token;
+  while (std::getline(ss, token, delimiter))
+  {
+    splitedString.push_back(token);
+  }
+  return splitedString;
 }
