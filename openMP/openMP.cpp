@@ -36,10 +36,11 @@ int main(int argc, char **argv)
   float avegare;
   std::vector<std::string> splitedLine;
 
-#pragma omp parllel
+#pragma omp parallel
   {
 
 #pragma omp for
+
     for (int i = 0; i < line.length(); i++)
     {
 
