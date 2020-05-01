@@ -12,50 +12,55 @@
 
 using namespace std;
 
-std::vector<std::string> split(std::string line, char delimiter = ';');
+std::vector<std::string> split(std::string line, char delimiter);
 
 int main(int argc, char **argv)
 {
-
-  if (!argv[1])
+  try
   {
-    throw "Especifica la ruta";
-  }
-  std::vector<std::string> csvDir;
-  csvDir = split(argv[1], '=');
-  cout << "Intentando abrir archivo " << csvDir[1] << endl;
-  std::ifstream inFile(csvDir[1]);
-  if (inFile.fail())
-  {
-    inFile.close();
-    throw "No se ha podido abrir el archivo";
-  }
-  std::cout << "Leyendo..." << endl;
-  std::ofstream outFile("promedio.csv");
-  std::string line;
-  float avegare;
-  std::vector<std::string> splitedLine;
+    if (!argv[1])
+    {
+      throw "Especifica la ruta";
+    }
+    std::vector<std::string> csvDir;
+    csvDir = split(argv[1], '=');
+    cout << "Intentando abrir archivo " << csvDir[1] << endl;
+    std::ifstream inFile(csvDir[1]);
+    if (inFile.fail())
+    {
+      inFile.close();
+      throw "No se ha podido abrir el archivo";
+    }
+    std::cout << "Leyendo..." << endl;
+    std::ofstream outFile("promedio.csv");
+    std::string line;
+    float average;
+    std::vector<std::string> splitedLine;
 
 #pragma omp parallel
-  {
-
+    {
 #pragma omp for
 
-    for (int i = 0; i < line.length(); i++)
-    {
+      for (int i = 0; i < line.length() && line[i] != '\0'; i++)
+      {
 
-      getline(inFile, line);
-      std::istringstream iss(line);
-      splitedLine = split(line, ';');
+        getline(inFile, line);
+        std::istringstream iss(line);
+        splitedLine = split(line, ';');
 
-      avegare = (std::stoi(splitedLine[1]) + std::stoi(splitedLine[2]) + std::stoi(splitedLine[3]) + std::stoi(splitedLine[4]) + std::stoi(splitedLine[5]) + std::stoi(splitedLine[6])) / 6;
+        average = (std::stoi(splitedLine[1]) + std::stoi(splitedLine[2]) + std::stoi(splitedLine[3]) + std::stoi(splitedLine[4]) + std::stoi(splitedLine[5]) + std::stoi(splitedLine[6])) / 6;
 
 #pragma omp critical
-      outFile << splitedLine[0] << ";" << avegare << endl;
+        outFile << splitedLine[0] << ";" << average << endl;
+      }
     }
+    inFile.close();
+    outFile.close();
   }
-  inFile.close();
-  outFile.close();
+  catch (const char *e)
+  {
+    std::cerr << e << '\n';
+  }
 }
 
 std::vector<std::string> split(std::string line, char delimiter = ';')
