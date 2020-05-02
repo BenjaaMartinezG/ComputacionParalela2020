@@ -14,7 +14,7 @@ Tras esto se ha generado el csv correspondiente a **puntajes.csv**
 ## Secuencial
 Comando de compilacion
 ```
-g++ secuelcial.cpp -o ./secuencial
+g++ secuencial.cpp -o ./secuencial
 ```
 Comando para su ejecución
 ```
