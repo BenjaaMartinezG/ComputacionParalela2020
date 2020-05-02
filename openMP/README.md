@@ -3,7 +3,7 @@
 
 Clonar la carpeta
 ```
-git clone 
+git clone https://github.com/BenjaaMartinezG/ComputacionParalela2020.git
 ```
 
 Para compilar el archivo main se debe considerar el siguiente comando:
@@ -43,4 +43,4 @@ Comando para su ejecución
 ./openMP file=puntajes.csv
 ```
 ---
-# Nota: Se debe ejecutar main.cpp primeramente para que se genere el archivo .csv, y luego epecificarlo en la ruta del archivo para su posterior ejecución
+#### Nota: Se debe ejecutar main.cpp primeramente para que se genere el archivo .csv, y luego epecificarlo en la ruta del archivo para su posterior ejecución
