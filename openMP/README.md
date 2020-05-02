@@ -1,5 +1,4 @@
-### Taller 1: OpenMP
-
+## Taller 1: OpenMP
 
 Clonar la carpeta
 ```
