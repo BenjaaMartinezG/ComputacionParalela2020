@@ -39,23 +39,24 @@ int main(int argc, char **argv)
 
 #pragma omp parallel
     {
+
 #pragma omp for
 
-      for (int i = 0; i < line.length() && line[i] != '\0'; i++)
+      for (int rut = 14916641; rut < 19932391; rut++)
       {
-
-        getline(inFile, line);
-        std::istringstream iss(line);
-        splitedLine = split(line, ';');
-
-        average = (std::stoi(splitedLine[1]) + std::stoi(splitedLine[2]) + std::stoi(splitedLine[3]) + std::stoi(splitedLine[4]) + std::stoi(splitedLine[5]) + std::stoi(splitedLine[6])) / 6;
+        if (std::getline(inFile, line))
+        {
+          std::istringstream iss(line);
+          splitedLine = split(line, ';');
+          average = (std::stoi(splitedLine[1]) + std::stoi(splitedLine[2]) + std::stoi(splitedLine[3]) + std::stoi(splitedLine[4]) + std::stoi(splitedLine[5]) + std::stoi(splitedLine[6])) / 6;
 
 #pragma omp critical
-        outFile << splitedLine[0] << ";" << average << endl;
+          outFile << splitedLine[0] << ";" << average << endl;
+        }
       }
+      inFile.close();
+      outFile.close();
     }
-    inFile.close();
-    outFile.close();
   }
   catch (const char *e)
   {
