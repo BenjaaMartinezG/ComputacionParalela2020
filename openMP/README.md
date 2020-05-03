@@ -24,7 +24,7 @@ Comando para su ejecución
 
 Comando para su compilacion y ejecución
 ```
-dart ./main file=puntajes.csv
+dart ./main.dart file=puntajes.csv
 ```
 
 ## OpenMP
