@@ -1,11 +1,10 @@
 ## Taller 1: OpenMP
 
-Clonar la carpeta
+Para clonar la carpeta
 ```
 git clone https://github.com/BenjaaMartinezG/ComputacionParalela2020.git
 ```
-
-Para compilar el archivo main se debe considerar el siguiente comando:
+Primero se debe compilar el archivo main considerando el siguiente comando:
 ```
 g++ main.cpp -o ./main
 ```
@@ -20,11 +19,11 @@ Comando para su ejecución
 ```
 ./secuencial file=puntajes.csv
 ```
-## Dart
 
+## Dart
 Comando de compilacion
 ```
-g++ main.dart -o ./main
+dart main.dart
 ```
 Comando para su ejecución
 ```
@@ -32,10 +31,9 @@ dart ./main file=puntajes.csv
 ```
 
 ## OpenMP
-
 Comando de compilacion
 ```
-g++ openMP.cpp -o ./openMP
+g++ openMP.cpp -o ./openMP -fopenmp
 ```
 Comando para su ejecución
 ```
