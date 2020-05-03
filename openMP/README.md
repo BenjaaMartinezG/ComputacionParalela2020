@@ -21,11 +21,8 @@ Comando para su ejecución
 ```
 
 ## Dart
-Comando de compilacion
-```
-dart main.dart
-```
-Comando para su ejecución
+
+Comando para su compilacion y ejecución
 ```
 dart ./main file=puntajes.csv
 ```
