@@ -1,0 +1,1 @@
+select rut, cast(sum(nem+ranking+matematica+lenguaje+ciencias+historia) as decimal)/6 from puntajes group by rut
