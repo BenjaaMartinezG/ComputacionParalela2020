@@ -2,36 +2,42 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <iomanip>
 #include <sstream>
 #include <algorithm>
 #include <iterator>
 #include <math.h>
 #include <cmath>
 #include <iomanip>
+#include <assert.h>
 
 using namespace std;
 
 //Structs
-struct median
+struct score
 {
   //Vector que guardará los numeros que aparecen en el listado
   std::vector<float> uniqueNumbers;
   //Vector que guardará la cantidad de veces que se vio el numero en uniqueNumbers
   std::vector<long int> totalViewed;
+  //float que guarda la suma de todos los valores
+  long double summedValues;
 };
 
 //Functions
 std::vector<std::string> split(std::string line, char delimiter);
-void printScore(std::string name, float average, struct median st);
+void printScore(std::string name, long int cont, struct score st);
 void integrantes();
-void manageMedian(float number, struct median &st);
-float calculateMedian(struct median st);
+void manageScore(long double number, struct score &st);
+float calculateModa(struct score st);
+float calculateDev(struct score st, long int cont);
+float calculateMediana(struct score st);
+void sort(std::vector<float> &arr);
+void mergeSort(vector<float> &left, vector<float> &right, vector<float> &bars);
+float Stdev(const std::vector<float> &moments);
 
 int main(int argc, char **argv)
 {
-  long int totalScores[6] = {0, 0, 0, 0, 0, 0};
-  struct median nemMedian, rankingMedian, mathMedian, LangMedian, CienMedian, HistMedian;
+  struct score nemScore, rankingScore, mathScore, LangScore, CienScore, HistScore;
   try
   {
     if (!argv[1])
@@ -49,7 +55,7 @@ int main(int argc, char **argv)
     }
     std::cout << "Leyendo..." << endl;
     std::string line;
-    float cont = 0;
+    long int cont = 0;
     std::vector<std::string> splitedLine;
     while (std::getline(inFile, line))
     {
@@ -59,33 +65,32 @@ int main(int argc, char **argv)
         Obtenemos la suma de todos los puntajes de
         NEM, Ranking, Matematica, Lenguaje, Ciencias e Historia respectivamente
       */
-      totalScores[0] += std::stoi(splitedLine[1]);
-      totalScores[1] += std::stoi(splitedLine[2]);
-      totalScores[2] += std::stoi(splitedLine[3]);
-      totalScores[3] += std::stoi(splitedLine[4]);
-      totalScores[4] += std::stoi(splitedLine[5]);
-      totalScores[5] += std::stoi(splitedLine[6]);
+      nemScore.summedValues += std::stoi(splitedLine[1]);
+      rankingScore.summedValues += std::stoi(splitedLine[2]);
+      mathScore.summedValues += std::stoi(splitedLine[3]);
+      LangScore.summedValues += std::stoi(splitedLine[4]);
+      CienScore.summedValues += std::stoi(splitedLine[5]);
+      HistScore.summedValues += std::stoi(splitedLine[6]);
 
-      // Mediana
-      manageMedian(std::stoi(splitedLine[1]), nemMedian);
-      manageMedian(std::stoi(splitedLine[2]), rankingMedian);
-      manageMedian(std::stoi(splitedLine[3]), mathMedian);
-      manageMedian(std::stoi(splitedLine[4]), LangMedian);
-      manageMedian(std::stoi(splitedLine[5]), CienMedian);
-      manageMedian(std::stoi(splitedLine[6]), HistMedian);
+      // Moda
+      manageScore(std::stoi(splitedLine[1]), nemScore);
+      manageScore(std::stoi(splitedLine[2]), rankingScore);
+      manageScore(std::stoi(splitedLine[3]), mathScore);
+      manageScore(std::stoi(splitedLine[4]), LangScore);
+      manageScore(std::stoi(splitedLine[5]), CienScore);
+      manageScore(std::stoi(splitedLine[6]), HistScore);
 
       //Contador de personas
       cont++;
     }
-    std::cout << nemMedian.totalViewed[0] << endl;
 
     //llamado a funcione con todo el contenido que se pide
-    printScore("NEM", totalScores[0] / cont, nemMedian);
-    printScore("RANKING", totalScores[1] / cont, rankingMedian);
-    printScore("MATEMÁTICAS", totalScores[2] / cont, mathMedian);
-    printScore("LENGUAJE", totalScores[3] / cont, LangMedian);
-    printScore("CIENCIAS", totalScores[4] / cont, CienMedian);
-    printScore("HISTORIA", totalScores[5] / cont, HistMedian);
+    printScore("NEM", cont, nemScore);
+    printScore("RANKING", cont, rankingScore);
+    printScore("MATEMATICAS", cont, mathScore);
+    printScore("LENGUAJE", cont, LangScore);
+    printScore("CIENCIAS", cont, CienScore);
+    printScore("HISTORIA", cont, HistScore);
     integrantes();
 
     inFile.close();
@@ -108,13 +113,13 @@ std::vector<std::string> split(std::string line, char delimiter = ';')
   return splitedString;
 }
 
-void printScore(std::string name, float avegare, struct median st)
+void printScore(std::string name, long int cont, struct score st)
 {
   std::cout << "\n===" << name << "===" << std::endl
-            << "Promedio: " << avegare << std::endl
-            << "Desviacion Estandar: " << std::endl
-            << "Moda: " << calculateMedian(st) << std::endl
-            << "Mediana: " << std::endl;
+            << "Promedio: " << st.summedValues / cont << std::endl
+            << "Desviacion Estandar: " << calculateDev(st, cont) << std::endl
+            << "Moda: " << calculateModa(st) << std::endl
+            << "Mediana: " << calculateMediana(st) << std::endl;
 }
 
 void integrantes()
@@ -125,11 +130,11 @@ void integrantes()
             << "Benjamin Martinez" << std::endl;
 }
 
-void manageMedian(float number, struct median &st)
+void manageScore(long double number, struct score &st)
 {
   int index;
   bool isOnVector = false;
-  for (int i = 0; st.uniqueNumbers.size(); i++)
+  for (int i = 0; i < st.uniqueNumbers.size(); i++)
   {
     if (st.uniqueNumbers[i] == number)
     {
@@ -148,10 +153,10 @@ void manageMedian(float number, struct median &st)
   }
 }
 
-float calculateMedian(struct median st)
+float calculateModa(struct score st)
 {
   int bigestIndex = 0;
-  for (int i = 0; st.totalViewed.size(); i++)
+  for (int i = 0; i < st.totalViewed.size(); i++)
   {
     if (st.totalViewed[i] > bigestIndex)
     {
@@ -159,4 +164,83 @@ float calculateMedian(struct median st)
     }
   }
   return st.uniqueNumbers[bigestIndex];
+}
+
+float calculateDev(struct score st, long int cont)
+{
+  float average = st.summedValues / cont;
+  float variance = 0;
+  for (int i = 0; i < st.uniqueNumbers.size(); i++)
+  {
+    variance += pow((st.uniqueNumbers[i] - average), 2.0);
+  }
+  return sqrt(variance / st.uniqueNumbers.size() - 1);
+}
+
+float calculateMediana(struct score st)
+{
+  //Primero se deben ordenar los valores
+  int totalScores = st.uniqueNumbers.size();
+  int halfIndex = totalScores / 2;
+  sort(st.uniqueNumbers);
+  if (totalScores % 2 == 0)
+  {
+    return (st.uniqueNumbers[halfIndex] + st.uniqueNumbers[halfIndex]) / 2;
+  }
+  else
+  {
+    return st.uniqueNumbers[halfIndex - 1];
+  }
+}
+
+void sort(vector<float> &bar)
+{
+  if (bar.size() <= 1)
+    return;
+
+  int mid = bar.size() / 2;
+  vector<float> left;
+  vector<float> right;
+
+  for (size_t j = 0; j < mid; j++)
+    left.push_back(bar[j]);
+  for (size_t j = 0; j < (bar.size()) - mid; j++)
+    right.push_back(bar[mid + j]);
+
+  sort(left);
+  sort(right);
+  mergeSort(left, right, bar);
+}
+void mergeSort(vector<float> &left, vector<float> &right, vector<float> &bars)
+{
+  int nL = left.size();
+  int nR = right.size();
+  int i = 0, j = 0, k = 0;
+
+  while (j < nL && k < nR)
+  {
+    if (left[j] < right[k])
+    {
+      bars[i] = left[j];
+      j++;
+    }
+    else
+    {
+      bars[i] = right[k];
+      k++;
+    }
+    i++;
+  }
+  while (j < nL)
+  {
+    bars[i] = left[j];
+    j++;
+    i++;
+  }
+  while (k < nR)
+  {
+    bars[i] = right[k];
+    k++;
+    i++;
+  }
 }
