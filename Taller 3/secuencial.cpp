@@ -72,7 +72,7 @@ int main(int argc, char **argv)
       CienScore.summedValues += std::stoi(splitedLine[5]);
       HistScore.summedValues += std::stoi(splitedLine[6]);
 
-      // Moda
+      // Se manejan los valores en structs por separado
       manageScore(std::stoi(splitedLine[1]), nemScore);
       manageScore(std::stoi(splitedLine[2]), rankingScore);
       manageScore(std::stoi(splitedLine[3]), mathScore);
