@@ -9,6 +9,7 @@
 #include <cmath>
 #include <iomanip>
 #include <assert.h>
+#include "omp.h"
 
 using namespace std;
 
@@ -52,35 +53,38 @@ int main(int argc, char **argv)
       throw "No se ha podido abrir el archivo";
     }
     std::cout << "Leyendo..." << endl;
-    long int cont = 0;
+    long int cont = 19932391 - 14916641;
     std::vector<std::string> splitedLine;
-    for (std::string line; getline(inFile, line);)
+
+#pragma omp parallel
     {
-      std::istringstream iss(line);
-      splitedLine = split(line, ';');
-      /*
-        Obtenemos la suma de todos los puntajes de
-        NEM, Ranking, Matematica, Lenguaje, Ciencias e Historia respectivamente
-      */
-      nemScore.summedValues += std::stoi(splitedLine[1]);
-      rankingScore.summedValues += std::stoi(splitedLine[2]);
-      mathScore.summedValues += std::stoi(splitedLine[3]);
-      LangScore.summedValues += std::stoi(splitedLine[4]);
-      CienScore.summedValues += std::stoi(splitedLine[5]);
-      HistScore.summedValues += std::stoi(splitedLine[6]);
-
-      // Se manejan los valores en structs por separado
-      manageScore(std::stoi(splitedLine[1]), nemScore);
-      manageScore(std::stoi(splitedLine[2]), rankingScore);
-      manageScore(std::stoi(splitedLine[3]), mathScore);
-      manageScore(std::stoi(splitedLine[4]), LangScore);
-      manageScore(std::stoi(splitedLine[5]), CienScore);
-      manageScore(std::stoi(splitedLine[6]), HistScore);
-
-      //Contador de personas
-      cont++;
+#pragma omp single
+      {
+        for (std::string line; getline(inFile, line);)
+        {
+#pragma omp task
+          std::istringstream iss(line);
+          splitedLine = split(line, ';');
+          /*
+                  Obtenemos la suma de todos los puntajes de
+                  NEM, Ranking, Matematica, Lenguaje, Ciencias e Historia respectivamente
+                */
+          nemScore.summedValues += std::stoi(splitedLine[1]);
+          rankingScore.summedValues += std::stoi(splitedLine[2]);
+          mathScore.summedValues += std::stoi(splitedLine[3]);
+          LangScore.summedValues += std::stoi(splitedLine[4]);
+          CienScore.summedValues += std::stoi(splitedLine[5]);
+          HistScore.summedValues += std::stoi(splitedLine[6]);
+          // Se manejan los valores en structs por separado
+          manageScore(std::stoi(splitedLine[1]), nemScore);
+          manageScore(std::stoi(splitedLine[2]), rankingScore);
+          manageScore(std::stoi(splitedLine[3]), mathScore);
+          manageScore(std::stoi(splitedLine[4]), LangScore);
+          manageScore(std::stoi(splitedLine[5]), CienScore);
+          manageScore(std::stoi(splitedLine[6]), HistScore);
+        }
+      }
     }
-
     //llamado a funcione con todo el contenido que se pide
     printScore("NEM", cont, nemScore);
     printScore("RANKING", cont, rankingScore);
@@ -141,6 +145,7 @@ void manageScore(double number, struct score &st)
   }
   if (isOnVector)
   {
+
     st.totalViewed[index] += 1;
   }
   else
@@ -166,7 +171,7 @@ float calculateModa(struct score st)
 float calculateDev(struct score st, int cont)
 {
   float average = st.summedValues / cont;
-  float variance = 0;
+  float variance = 0.0;
   for (int i = 0; i < st.uniqueNumbers.size(); i++)
   {
     variance += pow((st.uniqueNumbers[i] - average), 2.0);
@@ -242,3 +247,87 @@ void mergeSort(vector<float> &left, vector<float> &right, vector<float> &bars)
     i++;
   }
 }
+
+/*
+int main(int argc, char **argv)
+{
+  struct score nemScore, rankingScore, mathScore, LangScore, CienScore, HistScore;
+  const double cont = 5015750;
+  try
+  {
+    if (!argv[1])
+    {
+      throw "Especifica la ruta";
+    }
+    std::vector<std::string> csvDir;
+    csvDir = split(argv[1], '=');
+    cout << "Abriendo Archivo " << csvDir[1] << endl;
+    std::ifstream inFile(csvDir[1]);
+    if (inFile.fail())
+    {
+      inFile.close();
+      throw "No se ha podido abrir el archivo";
+    }
+    std::cout << "Leyendo..." << endl;
+
+    std::string line;
+    std::vector<std::string> splitedLine;
+
+#pragma omp parallel
+    {
+
+      if (std::getline(inFile, line))
+      {
+#pragma omp for
+
+        for (int rut = 14916641; rut < 19932391; rut++)
+        {
+          std::istringstream iss(line);
+          splitedLine = split(line, ';');
+          nemScore.summedValues += std::stoi(splitedLine[1]);
+          rankingScore.summedValues += std::stoi(splitedLine[2]);
+          mathScore.summedValues += std::stoi(splitedLine[3]);
+          LangScore.summedValues += std::stoi(splitedLine[4]);
+          CienScore.summedValues += std::stoi(splitedLine[5]);
+          HistScore.summedValues += std::stoi(splitedLine[6]);
+        }
+      }
+
+      //single El bloque se ejecuta por un único thread. No tiene por qué ser el maestro.
+      //Hay barrera al final a no ser que se utilice la cláusula nowait
+#pragma omp single
+      {
+        if (true)
+        {
+          for (int i = 0; i < cont; i++)
+          {
+            manageScore(std::stoi(splitedLine[1]), nemScore);
+            manageScore(std::stoi(splitedLine[2]), rankingScore);
+            manageScore(std::stoi(splitedLine[3]), mathScore);
+            manageScore(std::stoi(splitedLine[4]), LangScore);
+            manageScore(std::stoi(splitedLine[5]), CienScore);
+            manageScore(std::stoi(splitedLine[6]), HistScore);
+          }
+        }
+
+        //task, ejecutara la tarea si o si del thread
+#pragma omp task
+        {
+          printScore("NEM", cont, nemScore);
+          printScore("RANKING", cont, rankingScore);
+          printScore("MATEMATICAS", cont, mathScore);
+          printScore("LENGUAJE", cont, LangScore);
+          printScore("CIENCIAS", cont, CienScore);
+          printScore("HISTORIA", cont, HistScore);
+          integrantes();
+        }
+      }
+    }
+    inFile.close();
+  }
+  catch (const char *e)
+  {
+    std::cerr << e << '\n';
+  }
+}
+*/
