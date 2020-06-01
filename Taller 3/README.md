@@ -42,3 +42,7 @@ g++ openMP.cpp -o ./openMP -fopenmp
 ```
 ## OpenMPI
 Para esto se deben tener 3 maquinas funcionando, conectadas mediante ssh y ubicar este archivo en una carpeta compartida entre ellas, para luego ejecutar:
+```
+./run.sh
+```
+
