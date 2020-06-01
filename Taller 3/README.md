@@ -14,10 +14,10 @@ Para cada una de las siguientes columnas del archivo de entrada:
 * Ciencias.
 * Historia.
 ### Implementacion
-*Se necesita una implementación Secuencial en C/C++ .
-*Se necesita una implementación Secuencial en Dart .
-*Se necesita una implementación en C/C++ que use OpenMP .
-*Se necesita una implementación en C/C++ que use (Open)MPI
+* Se necesita una implementación Secuencial en C/C++ .
+* Se necesita una implementación Secuencial en Dart .
+* Se necesita una implementación en C/C++ que use OpenMP .
+* Se necesita una implementación en C/C++ que use (Open)MPI
 ### Nota: Se debe tener el archivo puntajes.csv para poder trabajar con él, si no lo tiene, se genera uno en main.cpp de la siguiente manera:
 ```
 g++ main.cpp -o ./main
