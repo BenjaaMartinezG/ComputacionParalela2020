@@ -41,8 +41,8 @@ g++ openMP.cpp -o ./openMP -fopenmp
 ./openMP /media/Compartido/puntajes.csv
 ```
 ## OpenMPI
-Para esto se deben tener 3 maquinas funcionando, conectadas mediante ssh y ubicar este archivo en una carpeta compartida entre ellas, para luego ejecutar:
+Para esto se deben tener minimo 3 maquinas funcionando, conectadas mediante ssh y ubicar este archivo en una carpeta compartida entre ellas, para luego ejecutar:
 ```
-./run.sh
+mpirun --hostfile maquinas.txt ./dist/promediador-mpi /media/Compartido/puntajes.csv
 ```
 
