@@ -30,6 +30,7 @@ g++ Secuencial.cpp -o ./Secuencial
 ./Secuencial /media/Compartido/puntajes.csv
 ```
 ## DART
+Comando para Compilar y ejecutar 
 ## OpenMP
 Comandos para Compilar y ejecutar el archivo openMP.cpp respectivamente:
 ```
