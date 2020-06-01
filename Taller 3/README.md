@@ -30,7 +30,10 @@ g++ Secuencial.cpp -o ./Secuencial
 ./Secuencial /media/Compartido/puntajes.csv
 ```
 ## DART
-Comando para Compilar y ejecutar 
+Comando para Compilar y ejecutar main.dart respectivamente:
+```
+dart ./main.dart /media/Compartido/puntajes.csv
+```
 ## OpenMP
 Comandos para Compilar y ejecutar el archivo openMP.cpp respectivamente:
 ```
@@ -38,3 +41,4 @@ g++ openMP.cpp -o ./openMP -fopenmp
 ./openMP /media/Compartido/puntajes.csv
 ```
 ## OpenMPI
+Para esto se deben tener 3 maquinas funcionando, conectadas mediante ssh y ubicar este archivo en una carpeta compartida entre ellas, para luego ejecutar:
